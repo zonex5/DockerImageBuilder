@@ -8,6 +8,6 @@ namespace DockerImageBuilder
 {
     public enum Statuses
     {
-        Failed, Done, Waiting, Process
+        Waiting, Failed, Done, Process
     }
 }

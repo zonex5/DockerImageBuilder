@@ -11,6 +11,6 @@ namespace DockerImageBuilder
         public string Caption { get; set; }
         public string Path { get; set; }
         public Statuses Status { get; set; }
-        public bool Checked { get; set; }
+        public bool Checked { get; set; } = true;
     }
 }
