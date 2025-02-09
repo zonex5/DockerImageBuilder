@@ -11,8 +11,10 @@ using System.Windows.Forms;
 
 namespace DockerImageBuilder
 {
-    public class Service
+    public abstract class Service
     {
+        public static event Action<string, Color> OnLogRequest = delegate { };
+
         public static VcType ProjectVcs(string path)
         {
             if (File.Exists(Path.Combine(path, "build.gradle")) || File.Exists(Path.Combine(path, "build.gradle.kts")))
@@ -22,7 +24,12 @@ namespace DockerImageBuilder
             return VcType.None;
         }
 
-        /*public static Task RunProcessAsync(string command, string path, RichTextBox logs)
+        private static bool IsDocker(string path)
+        {
+            return File.Exists(Path.Combine(path, "Dockerfile"));
+        }
+
+        public static Task RunProcessAsync(string command, string path)
         {
             return Task.Run(() =>
             {
@@ -39,10 +46,11 @@ namespace DockerImageBuilder
                     WorkingDirectory = path
                 };
 
-                using (Process process = new Process { StartInfo = psi })
+                using (var process = new Process())
                 {
-                    process.OutputDataReceived += (sender, e) => AppendTextToRichTextBox(logs, e.Data, Color.Black);
-                    process.ErrorDataReceived += (sender, e) => AppendTextToRichTextBox(logs, e.Data, Color.OrangeRed);
+                    process.StartInfo = psi;
+                    process.OutputDataReceived += (sender, e) => OnLogRequest(e.Data, Color.Black);
+                    process.ErrorDataReceived += (sender, e) => OnLogRequest(e.Data, Color.OrangeRed);
 
                     process.Start();
                     process.BeginOutputReadLine();
@@ -50,7 +58,7 @@ namespace DockerImageBuilder
                     process.WaitForExit();
                 }
             });
-        }*/
+        }
 
         public static List<ProjectDirectoryInfo> ImportDirectory(string path)
         {
@@ -64,9 +72,10 @@ namespace DockerImageBuilder
         {
             var dirName = Path.GetFileName(path);
             var vcs = ProjectVcs(path);
-            return vcs == VcType.None
-                ? null
-                : new ProjectDirectoryInfo { Caption = dirName, Path = path, Vcs = vcs, ImageTag = "0.0.1", ImageName = FormatDockerImageName(dirName) };
+            var isDocker = IsDocker(path);
+            return vcs != VcType.None || isDocker
+                ? new ProjectDirectoryInfo { Caption = dirName, Path = path, Vcs = vcs, Docker = IsDocker(path), ImageTag = "0.0.1", ImageName = FormatDockerImageName(dirName) }
+                : null;
         }
 
         public static string GetCurrentContext()

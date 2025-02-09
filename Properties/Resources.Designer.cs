@@ -63,9 +63,9 @@ namespace DockerImageBuilder.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap gradle {
+        internal static System.Drawing.Bitmap docker16 {
             get {
-                object obj = ResourceManager.GetObject("gradle", resourceCulture);
+                object obj = ResourceManager.GetObject("docker16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -73,9 +73,29 @@ namespace DockerImageBuilder.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap maven {
+        internal static System.Drawing.Bitmap empty {
             get {
-                object obj = ResourceManager.GetObject("maven", resourceCulture);
+                object obj = ResourceManager.GetObject("empty", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap gradle16 {
+            get {
+                object obj = ResourceManager.GetObject("gradle16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap maven16 {
+            get {
+                object obj = ResourceManager.GetObject("maven16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

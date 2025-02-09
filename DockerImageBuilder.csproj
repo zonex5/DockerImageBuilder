@@ -128,5 +128,17 @@
   <ItemGroup>
     <None Include="Resources\maven.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\gradle16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\maven16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\docker16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\empty.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

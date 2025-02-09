@@ -45,7 +45,8 @@
             this.imageList = new System.Windows.Forms.ImageList(this.components);
             this.grid = new System.Windows.Forms.DataGridView();
             this.Check = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.Icon = new System.Windows.Forms.DataGridViewImageColumn();
+            this.VcsIcon = new System.Windows.Forms.DataGridViewImageColumn();
+            this.DockerImage = new System.Windows.Forms.DataGridViewImageColumn();
             this.Project = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ImageName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ImageTag = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -166,7 +167,7 @@
             this.grid.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.grid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.grid.ColumnHeadersVisible = false;
-            this.grid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { this.Check, this.Icon, this.Project, this.ImageName, this.ImageTag, this.Status });
+            this.grid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { this.Check, this.VcsIcon, this.DockerImage, this.Project, this.ImageName, this.ImageTag, this.Status });
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
             dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -203,13 +204,20 @@
             this.Check.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.Check.Width = 30;
             // 
-            // Icon
+            // VcsIcon
             // 
-            this.Icon.DataPropertyName = "VcIcon";
-            this.Icon.HeaderText = "";
-            this.Icon.Name = "Icon";
-            this.Icon.ReadOnly = true;
-            this.Icon.Width = 30;
+            this.VcsIcon.DataPropertyName = "VcsIcon";
+            this.VcsIcon.HeaderText = "";
+            this.VcsIcon.Name = "VcsIcon";
+            this.VcsIcon.ReadOnly = true;
+            this.VcsIcon.Width = 24;
+            // 
+            // DockerImage
+            // 
+            this.DockerImage.DataPropertyName = "DockerIcon";
+            this.DockerImage.HeaderText = "";
+            this.DockerImage.Name = "DockerImage";
+            this.DockerImage.Width = 24;
             // 
             // Project
             // 
@@ -269,16 +277,17 @@
         private System.Windows.Forms.ToolStripButton btBuild;
         private System.Windows.Forms.ImageList imageList;
         private System.Windows.Forms.DataGridView grid;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn Check;
-        private System.Windows.Forms.DataGridViewImageColumn Icon;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Project;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ImageName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ImageTag;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Status;
         private System.Windows.Forms.ToolStripButton btSave;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton btOpen;
         private System.Windows.Forms.ToolStripButton btAdd;
         private System.Windows.Forms.ToolStripButton btDelete;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn Check;
+        private System.Windows.Forms.DataGridViewImageColumn VcsIcon;
+        private System.Windows.Forms.DataGridViewImageColumn DockerImage;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Project;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ImageName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ImageTag;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Status;
     }
 }

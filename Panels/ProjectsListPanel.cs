@@ -1,21 +1,17 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using Newtonsoft.Json;
 
 namespace DockerImageBuilder.Panels
 {
     public partial class ProjectsListPanel : UserControl
     {
         public event Action<string> OnPathChanged = delegate { };
+        public event Action<string, Color> OnLogRequest = delegate { };
 
         public ProjectsListPanel()
         {
@@ -61,7 +57,7 @@ namespace DockerImageBuilder.Panels
             LoadData(dialog.SelectedPath);
         }
 
-        private void btBuild_Click(object sender, EventArgs e)
+        private async void btBuild_Click(object sender, EventArgs e)
         {
             var selectedRows = GetCheckedRows(grid);
             if (selectedRows.Count == 0)
@@ -72,23 +68,26 @@ namespace DockerImageBuilder.Panels
 
             foreach (DataGridViewRow row in selectedRows)
             {
-                //AppendTextToRichTextBox($"Start building project {row.Cells[1].Value}\n", Color.DodgerBlue);
-                //var project = (ProjectDirectoryInfo)row.DataBoundItem;
-                //switch (ProjectVcs(project.Path))
-                //{
-                //    case VcType.Gradle:
-                //        await RunProcessAsync("/c gradlew clean build -x testClasses", project.Path);
-                //        break;
-                //    case VcType.Maven:
-                //        await RunProcessAsync("/c mvn clean install -Dmaven.test.skip=true", project.Path);
-                //        break;
-                //    default:
-                //        AppendTextToRichTextBox($"! No VCS project found", Color.Chocolate);
-                //        break;
-                //}
-                //
-                //AppendTextToRichTextBox("\n", Color.Black);
+                var project = (ProjectDirectoryInfo)row.DataBoundItem;
+                OnLogRequest($"Start building project {project.Caption}\n", Color.RoyalBlue);
+                switch (Service.ProjectVcs(project.Path))
+                {
+                    case VcType.Gradle:
+                        await Service.RunProcessAsync(@"/c gradlew clean build -x testClasses", project.Path);
+                        break;
+                    case VcType.Maven:
+                        await Service.RunProcessAsync(@"/c mvn clean install -Dmaven.test.skip=true", project.Path);
+                        break;
+                    case VcType.None:
+                    default:
+                        OnLogRequest($"! No VCS project found", Color.Chocolate);
+                        break;
+                }
+
+                OnLogRequest("\n", Color.Black);
             }
+
+            OnLogRequest("Done!", Color.RoyalBlue);
         }
 
         private void grid_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
@@ -128,7 +127,7 @@ namespace DockerImageBuilder.Panels
             }
         }
 
-        static List<DataGridViewRow> GetCheckedRows(DataGridView dataGridView)
+        private static List<DataGridViewRow> GetCheckedRows(DataGridView dataGridView)
         {
             var checkedRows = new List<DataGridViewRow>();
             foreach (DataGridViewRow row in dataGridView.Rows)

@@ -24,8 +24,6 @@ namespace DockerImageBuilder.Panels
 
         private void DockerPanel_Load(object sender, EventArgs e)
         {
-            formIsLoading = false;
-
             try
             {
                 cbContext.Items.AddRange(Service.GetAllContexts().ToArray());
@@ -41,6 +39,8 @@ namespace DockerImageBuilder.Panels
             chLoad.Checked = Service.GetValueFromRegistry("LoadImage") == "True";
             chDelete.Checked = Service.GetValueFromRegistry("DeleteImage") == "True";
             tbHub.Text = Service.GetValueFromRegistry("Repository");
+
+            formIsLoading = false;
         }
 
         private void CheckMinikube()

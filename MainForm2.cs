@@ -1,13 +1,7 @@
-﻿using DockerImageBuilder.Panels;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
+﻿using System;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using DockerImageBuilder.Panels;
 using WeifenLuo.WinFormsUI.Docking;
 
 namespace DockerImageBuilder
@@ -26,7 +20,13 @@ namespace DockerImageBuilder
             ProjectsPanel = new ProjectsListPanel();
             ProjectsPanel.Dock = DockStyle.Fill;
             ProjectsPanel.LoadData(path);
-            ProjectsPanel.OnPathChanged += newPath => { path = newPath; lbPath.Text = path; };
+            ProjectsPanel.OnPathChanged += newPath =>
+            {
+                path = newPath;
+                lbPath.Text = path;
+            };
+            ProjectsPanel.OnLogRequest += (msg, color) => AppendTextToLogger(logger, msg, color);
+            Service.OnLogRequest += (msg, color) => AppendTextToLogger(logger, msg, color);
             AddProjectsListPanel();
             AddLogsPanel();
             AddDockerPanel();
@@ -84,12 +84,12 @@ namespace DockerImageBuilder
         {
             if (text == null) return;
 
-            if (text.Contains("BUILD SUCCESSFUL"))
+            if (text.Contains("BUILD SUCCESS"))
                 color = Color.Green;
 
             if (logs.InvokeRequired)
             {
-                logs.Invoke(new Action<RichTextBox, string, Color>(AppendTextToLogger), text, color);
+                logs.Invoke(new Action(() => AppendTextToLogger(logs, text, color)));
             }
             else
             {

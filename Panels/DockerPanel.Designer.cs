@@ -71,8 +71,7 @@
             // 
             // cbContext
             // 
-            this.cbContext.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbContext.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
             this.cbContext.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbContext.FormattingEnabled = true;
             this.cbContext.Location = new System.Drawing.Point(3, 27);
@@ -83,19 +82,17 @@
             // 
             // panel1
             // 
-            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.Controls.Add(this.chDelete);
             this.panel1.Controls.Add(this.chLoad);
-            this.panel1.Location = new System.Drawing.Point(4, 117);
+            this.panel1.Location = new System.Drawing.Point(3, 65);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(256, 61);
             this.panel1.TabIndex = 9;
             // 
             // panel2
             // 
-            this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
             this.panel2.Controls.Add(this.button1);
             this.panel2.Controls.Add(this.label1);
             this.panel2.Location = new System.Drawing.Point(3, 278);
@@ -106,8 +103,7 @@
             // 
             // button1
             // 
-            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
             this.button1.Location = new System.Drawing.Point(58, 53);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(157, 23);
@@ -118,8 +114,7 @@
             // 
             // label1
             // 
-            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.ForeColor = System.Drawing.Color.IndianRed;
             this.label1.Location = new System.Drawing.Point(4, 10);
             this.label1.Name = "label1";
@@ -140,7 +135,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(3, 65);
+            this.label3.Location = new System.Drawing.Point(7, 131);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(116, 13);
             this.label3.TabIndex = 12;
@@ -148,9 +143,8 @@
             // 
             // tbHub
             // 
-            this.tbHub.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbHub.Location = new System.Drawing.Point(3, 81);
+            this.tbHub.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbHub.Location = new System.Drawing.Point(7, 147);
             this.tbHub.MaxLength = 50;
             this.tbHub.Name = "tbHub";
             this.tbHub.Size = new System.Drawing.Size(252, 20);
@@ -176,7 +170,6 @@
             this.panel2.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
-
         }
 
         private System.Windows.Forms.TextBox tbHub;

@@ -17,22 +17,26 @@ namespace DockerImageBuilder
         public VcType Vcs { get; set; }
         public Statuses Status { get; set; }
         public bool Checked { get; set; } = true;
+        public bool Docker { get; set; }
 
         [JsonIgnore]
-        public Image VcIcon
+        public Image VcsIcon
         {
             get
             {
                 switch (Vcs)
                 {
                     case VcType.Gradle:
-                        return Properties.Resources.gradle;
+                        return Properties.Resources.gradle16;
                     case VcType.Maven:
-                        return Properties.Resources.maven;
+                        return Properties.Resources.maven16;
                     default:
-                        return null;
+                        return Properties.Resources.empty;
                 }
             }
         }
+
+        [JsonIgnore]
+        public Image DockerIcon => Docker ? Properties.Resources.docker16 : Properties.Resources.empty;
     }
 }
