@@ -74,7 +74,16 @@ namespace DockerImageBuilder
             var vcs = ProjectVcs(path);
             var isDocker = IsDocker(path);
             return vcs != VcType.None || isDocker
-                ? new ProjectDirectoryInfo { Caption = dirName, Path = path, Vcs = vcs, Docker = IsDocker(path), ImageTag = "0.0.1", ImageName = FormatDockerImageName(dirName) }
+                ? new ProjectDirectoryInfo
+                {
+                    Caption = dirName,
+                    Path = path,
+                    Vcs = vcs,
+                    IsBuild = vcs != VcType.None ? true : (bool?)null,
+                    IsDocker = IsDocker(path) ? true : (bool?)null,
+                    ImageTag = "0.0.1",
+                    ImageName = FormatDockerImageName(dirName)
+                }
                 : null;
         }
 

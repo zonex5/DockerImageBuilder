@@ -44,9 +44,8 @@
             this.btBuild = new System.Windows.Forms.ToolStripButton();
             this.imageList = new System.Windows.Forms.ImageList(this.components);
             this.grid = new System.Windows.Forms.DataGridView();
-            this.Check = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.VcsIcon = new System.Windows.Forms.DataGridViewImageColumn();
-            this.DockerImage = new System.Windows.Forms.DataGridViewImageColumn();
+            this.IsBuild = new System.Windows.Forms.DataGridViewImageColumn();
+            this.IsDocker = new System.Windows.Forms.DataGridViewImageColumn();
             this.Project = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ImageName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ImageTag = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -167,7 +166,7 @@
             this.grid.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.grid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.grid.ColumnHeadersVisible = false;
-            this.grid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { this.Check, this.VcsIcon, this.DockerImage, this.Project, this.ImageName, this.ImageTag, this.Status });
+            this.grid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { this.IsBuild, this.IsDocker, this.Project, this.ImageName, this.ImageTag, this.Status });
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
             dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -194,30 +193,22 @@
             this.grid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.grid.Size = new System.Drawing.Size(439, 416);
             this.grid.TabIndex = 5;
+            this.grid.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grid_CellClick);
             this.grid.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.grid_CellFormatting);
             // 
-            // Check
+            // IsBuild
             // 
-            this.Check.DataPropertyName = "Checked";
-            this.Check.HeaderText = "";
-            this.Check.Name = "Check";
-            this.Check.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.Check.Width = 30;
+            this.IsBuild.DataPropertyName = "IsBuild";
+            this.IsBuild.HeaderText = "";
+            this.IsBuild.Name = "IsBuild";
+            this.IsBuild.Width = 24;
             // 
-            // VcsIcon
+            // IsDocker
             // 
-            this.VcsIcon.DataPropertyName = "VcsIcon";
-            this.VcsIcon.HeaderText = "";
-            this.VcsIcon.Name = "VcsIcon";
-            this.VcsIcon.ReadOnly = true;
-            this.VcsIcon.Width = 24;
-            // 
-            // DockerImage
-            // 
-            this.DockerImage.DataPropertyName = "DockerIcon";
-            this.DockerImage.HeaderText = "";
-            this.DockerImage.Name = "DockerImage";
-            this.DockerImage.Width = 24;
+            this.IsDocker.DataPropertyName = "IsDocker";
+            this.IsDocker.HeaderText = "";
+            this.IsDocker.Name = "IsDocker";
+            this.IsDocker.Width = 24;
             // 
             // Project
             // 
@@ -282,9 +273,8 @@
         private System.Windows.Forms.ToolStripButton btOpen;
         private System.Windows.Forms.ToolStripButton btAdd;
         private System.Windows.Forms.ToolStripButton btDelete;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn Check;
-        private System.Windows.Forms.DataGridViewImageColumn VcsIcon;
-        private System.Windows.Forms.DataGridViewImageColumn DockerImage;
+        private System.Windows.Forms.DataGridViewImageColumn IsBuild;
+        private System.Windows.Forms.DataGridViewImageColumn IsDocker;
         private System.Windows.Forms.DataGridViewTextBoxColumn Project;
         private System.Windows.Forms.DataGridViewTextBoxColumn ImageName;
         private System.Windows.Forms.DataGridViewTextBoxColumn ImageTag;

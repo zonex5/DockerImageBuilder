@@ -4,6 +4,7 @@ using System.Drawing;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using DockerImageBuilder.Properties;
 using Newtonsoft.Json;
 
 namespace DockerImageBuilder.Panels
@@ -92,6 +93,7 @@ namespace DockerImageBuilder.Panels
 
         private void grid_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
+            // status column
             if (grid.Columns[e.ColumnIndex].Name == "Status")
             {
                 if (e.Value is Statuses status)
@@ -113,6 +115,56 @@ namespace DockerImageBuilder.Panels
                     }
                 }
             }
+
+            // build and docker columns
+            if (grid.Rows[e.RowIndex].DataBoundItem is ProjectDirectoryInfo obj)
+            {
+                if (grid.Columns[e.ColumnIndex].Name == "IsBuild")
+                {
+                    if (obj.IsBuild == null)
+                    {
+                        grid.Rows[e.RowIndex].Cells[e.ColumnIndex].ToolTipText = @"No VCS project found";
+                        e.Value = Resources.nonegray;
+                    }
+                    else
+                    {
+                        grid.Rows[e.RowIndex].Cells[e.ColumnIndex].ToolTipText = $"Build {obj.Vcs} project";
+                        e.Value = obj.IsBuild == true ? Resources.build16_color : Resources.build16;
+                    }
+                }
+
+                if (grid.Columns[e.ColumnIndex].Name == "IsDocker")
+                {
+                    if (obj.IsDocker == null)
+                    {
+                        grid.Rows[e.RowIndex].Cells[e.ColumnIndex].ToolTipText = @"No Dockerfile found";
+                        e.Value = Resources.nonegray;
+                    }
+                    else
+                    {
+                        grid.Rows[e.RowIndex].Cells[e.ColumnIndex].ToolTipText = $"Build Docker image";
+                        e.Value = obj.IsDocker == true ? Resources.docker16_color : Resources.docker16;
+                    }
+                }
+            }
+        }
+
+        private void grid_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            // build and docker columns
+            if (grid.Rows[e.RowIndex].DataBoundItem is ProjectDirectoryInfo obj)
+            {
+                if (grid.Columns[e.ColumnIndex].Name == "IsBuild")
+                {
+                    if (obj.IsBuild == null) return;
+                    obj.IsBuild = !obj.IsBuild;
+                }
+                else if (grid.Columns[e.ColumnIndex].Name == "IsDocker")
+                {
+                    if (obj.IsDocker == null) return;
+                    obj.IsDocker = !obj.IsDocker;
+                }
+            }
         }
 
         private void btSave_Click(object sender, EventArgs e)
@@ -130,13 +182,13 @@ namespace DockerImageBuilder.Panels
         private static List<DataGridViewRow> GetCheckedRows(DataGridView dataGridView)
         {
             var checkedRows = new List<DataGridViewRow>();
-            foreach (DataGridViewRow row in dataGridView.Rows)
+            /*foreach (DataGridViewRow row in dataGridView.Rows)
             {
                 if (row.DataBoundItem is ProjectDirectoryInfo item && item.Checked)
                 {
                     checkedRows.Add(row);
                 }
-            }
+            }*/
 
             return checkedRows;
         }

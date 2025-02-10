@@ -135,10 +135,25 @@
     <None Include="Resources\maven16.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\empty.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\build16_color.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\docker16_color.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\none.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\build16.png" />
+  </ItemGroup>
+  <ItemGroup>
     <None Include="Resources\docker16.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\empty.png" />
+    <None Include="Resources\nonegray.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
