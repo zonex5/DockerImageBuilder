@@ -56,6 +56,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BuildService.cs" />
+    <Compile Include="Forms\ProcessForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ProcessForm.Designer.cs">
+      <DependentUpon>ProcessForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -86,6 +93,9 @@
     <Compile Include="Service.cs" />
     <Compile Include="Statuses.cs" />
     <Compile Include="VcType.cs" />
+    <EmbeddedResource Include="Forms\ProcessForm.resx">
+      <DependentUpon>ProcessForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -123,10 +133,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\gradle.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\maven.png" />
+    <None Include="Resources\empty.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\gradle16.png" />
@@ -135,25 +142,7 @@
     <None Include="Resources\maven16.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\empty.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\build16_color.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\docker16_color.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\none.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\build16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\docker16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\nonegray.png" />
+    <None Include="Resources\docker16 .png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

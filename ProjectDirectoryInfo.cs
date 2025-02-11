@@ -1,7 +1,11 @@
-﻿namespace DockerImageBuilder
+﻿using System.Drawing;
+using Newtonsoft.Json;
+
+namespace DockerImageBuilder
 {
     public class ProjectDirectoryInfo
     {
+        public bool Checked { get; set; } = true;
         public string Caption { get; set; }
         public string Path { get; set; }
         public string ImageName { get; set; }
@@ -9,11 +13,9 @@
         public VcType Vcs { get; set; }
         public Statuses Status { get; set; }
 
-        public bool? IsDocker { get; set; } = true;
-
-        public bool? IsBuild  { get; set; } = true;
-
-        /*[JsonIgnore]
+        public bool IsDocker { get; set; }
+        
+        [JsonIgnore]
         public Image VcsIcon
         {
             get
@@ -31,6 +33,6 @@
         }
 
         [JsonIgnore]
-        public Image DockerIcon => Docker ? Properties.Resources.docker16 : Properties.Resources.empty;*/
+        public Image DockerIcon => IsDocker ? Properties.Resources.docker16 : Properties.Resources.empty;
     }
 }

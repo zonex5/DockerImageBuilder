@@ -4,6 +4,7 @@ using System.Drawing;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using DockerImageBuilder.Forms;
 using DockerImageBuilder.Properties;
 using Newtonsoft.Json;
 
@@ -13,6 +14,9 @@ namespace DockerImageBuilder.Panels
     {
         public event Action<string> OnPathChanged = delegate { };
         public event Action<string, Color> OnLogRequest = delegate { };
+        public event Action OnLogNewLineRequest = delegate { };
+
+        private bool loadImageToMinikube = true;
 
         public ProjectsListPanel()
         {
@@ -35,6 +39,8 @@ namespace DockerImageBuilder.Panels
 
         private void ProjectsListPanel_Load(object sender, EventArgs e)
         {
+            // propagate log events
+            BuildService.OnLogRequest += (msg, color) => OnLogRequest(msg, color);
         }
 
         public void LoadData(string path)
@@ -60,6 +66,9 @@ namespace DockerImageBuilder.Panels
 
         private async void btBuild_Click(object sender, EventArgs e)
         {
+            ProcessForm form = new ProcessForm();
+            if (form.ShowDialog(this) != DialogResult.OK) return;
+
             var selectedRows = GetCheckedRows(grid);
             if (selectedRows.Count == 0)
             {
@@ -70,22 +79,30 @@ namespace DockerImageBuilder.Panels
             foreach (DataGridViewRow row in selectedRows)
             {
                 var project = (ProjectDirectoryInfo)row.DataBoundItem;
-                OnLogRequest($"Start building project {project.Caption}\n", Color.RoyalBlue);
-                switch (Service.ProjectVcs(project.Path))
+
+                // build project
+                if (project.Vcs != VcType.None)
                 {
-                    case VcType.Gradle:
-                        await Service.RunProcessAsync(@"/c gradlew clean build -x testClasses", project.Path);
-                        break;
-                    case VcType.Maven:
-                        await Service.RunProcessAsync(@"/c mvn clean install -Dmaven.test.skip=true", project.Path);
-                        break;
-                    case VcType.None:
-                    default:
-                        OnLogRequest($"! No VCS project found", Color.Chocolate);
-                        break;
+                    OnLogRequest($"Start building project {project.Caption}\n", Color.RoyalBlue);
+                    await BuildService.BuildProject(project.Path);
+                    OnLogNewLineRequest();
                 }
 
-                OnLogRequest("\n", Color.Black);
+                // build docker image
+                if (project.IsDocker)
+                {
+                    OnLogRequest($"Start building docker image {project.ImageName}\n", Color.RoyalBlue);
+                    await BuildService.BuildDockerImage(project.Path, project.ImageName, project.ImageTag);
+                    OnLogNewLineRequest();
+                }
+
+                // load image to minikube
+                if (loadImageToMinikube)
+                {
+                    OnLogRequest($"Loading image {project.ImageName} to minikube\n", Color.RoyalBlue);
+                    await BuildService.LoadImageToMinikube(project.Path, project.ImageName, project.ImageTag);
+                    OnLogNewLineRequest();
+                }
             }
 
             OnLogRequest("Done!", Color.RoyalBlue);
@@ -115,56 +132,6 @@ namespace DockerImageBuilder.Panels
                     }
                 }
             }
-
-            // build and docker columns
-            if (grid.Rows[e.RowIndex].DataBoundItem is ProjectDirectoryInfo obj)
-            {
-                if (grid.Columns[e.ColumnIndex].Name == "IsBuild")
-                {
-                    if (obj.IsBuild == null)
-                    {
-                        grid.Rows[e.RowIndex].Cells[e.ColumnIndex].ToolTipText = @"No VCS project found";
-                        e.Value = Resources.nonegray;
-                    }
-                    else
-                    {
-                        grid.Rows[e.RowIndex].Cells[e.ColumnIndex].ToolTipText = $"Build {obj.Vcs} project";
-                        e.Value = obj.IsBuild == true ? Resources.build16_color : Resources.build16;
-                    }
-                }
-
-                if (grid.Columns[e.ColumnIndex].Name == "IsDocker")
-                {
-                    if (obj.IsDocker == null)
-                    {
-                        grid.Rows[e.RowIndex].Cells[e.ColumnIndex].ToolTipText = @"No Dockerfile found";
-                        e.Value = Resources.nonegray;
-                    }
-                    else
-                    {
-                        grid.Rows[e.RowIndex].Cells[e.ColumnIndex].ToolTipText = $"Build Docker image";
-                        e.Value = obj.IsDocker == true ? Resources.docker16_color : Resources.docker16;
-                    }
-                }
-            }
-        }
-
-        private void grid_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            // build and docker columns
-            if (grid.Rows[e.RowIndex].DataBoundItem is ProjectDirectoryInfo obj)
-            {
-                if (grid.Columns[e.ColumnIndex].Name == "IsBuild")
-                {
-                    if (obj.IsBuild == null) return;
-                    obj.IsBuild = !obj.IsBuild;
-                }
-                else if (grid.Columns[e.ColumnIndex].Name == "IsDocker")
-                {
-                    if (obj.IsDocker == null) return;
-                    obj.IsDocker = !obj.IsDocker;
-                }
-            }
         }
 
         private void btSave_Click(object sender, EventArgs e)
@@ -182,13 +149,13 @@ namespace DockerImageBuilder.Panels
         private static List<DataGridViewRow> GetCheckedRows(DataGridView dataGridView)
         {
             var checkedRows = new List<DataGridViewRow>();
-            /*foreach (DataGridViewRow row in dataGridView.Rows)
+            foreach (DataGridViewRow row in dataGridView.Rows)
             {
                 if (row.DataBoundItem is ProjectDirectoryInfo item && item.Checked)
                 {
                     checkedRows.Add(row);
                 }
-            }*/
+            }
 
             return checkedRows;
         }
@@ -230,6 +197,35 @@ namespace DockerImageBuilder.Panels
                 MessageBox.Show(@"Are you sure you want to clear the project list?", @"Clear list", MessageBoxButtons.YesNo, MessageBoxIcon.Asterisk) == DialogResult.Yes)
             {
                 grid.DataSource = null;
+            }
+        }
+
+        private void grid_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+        {
+            if (e.ColumnIndex == 2 && e.RowIndex >= 0)
+            {
+                e.PaintBackground(e.CellBounds, true);
+
+                // Получаем привязанный объект
+                if (grid.Rows[e.RowIndex].DataBoundItem is ProjectDirectoryInfo dataItem)
+                {
+                    // Получаем иконки из объекта
+                    Image vcsIcon = dataItem.VcsIcon;
+                    Image dockerIcon = dataItem.DockerIcon;
+
+                    // Отображаем иконки
+                    if (vcsIcon != null)
+                    {
+                        e.Graphics.DrawImage(vcsIcon, new Rectangle(e.CellBounds.X + 2, e.CellBounds.Y + 2, 16, 16));
+                    }
+
+                    if (dockerIcon != null)
+                    {
+                        e.Graphics.DrawImage(dockerIcon, new Rectangle(e.CellBounds.X + 20, e.CellBounds.Y + 2, 16, 16));
+                    }
+                }
+
+                e.Handled = true;
             }
         }
     }

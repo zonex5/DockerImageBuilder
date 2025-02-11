@@ -24,7 +24,7 @@ namespace DockerImageBuilder
             return VcType.None;
         }
 
-        private static bool IsDocker(string path)
+        public static bool IsDocker(string path)
         {
             return File.Exists(Path.Combine(path, "Dockerfile"));
         }
@@ -79,8 +79,7 @@ namespace DockerImageBuilder
                     Caption = dirName,
                     Path = path,
                     Vcs = vcs,
-                    IsBuild = vcs != VcType.None ? true : (bool?)null,
-                    IsDocker = IsDocker(path) ? true : (bool?)null,
+                    IsDocker = isDocker,
                     ImageTag = "0.0.1",
                     ImageName = FormatDockerImageName(dirName)
                 }

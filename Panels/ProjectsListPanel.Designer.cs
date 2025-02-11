@@ -30,9 +30,9 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ProjectsListPanel));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle34 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle35 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle36 = new System.Windows.Forms.DataGridViewCellStyle();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.btClear = new System.Windows.Forms.ToolStripButton();
             this.btImport = new System.Windows.Forms.ToolStripButton();
@@ -44,23 +44,51 @@
             this.btBuild = new System.Windows.Forms.ToolStripButton();
             this.imageList = new System.Windows.Forms.ImageList(this.components);
             this.grid = new System.Windows.Forms.DataGridView();
-            this.IsBuild = new System.Windows.Forms.DataGridViewImageColumn();
-            this.IsDocker = new System.Windows.Forms.DataGridViewImageColumn();
+            this.Cheched = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.Project = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Icons = new System.Windows.Forms.DataGridViewImageColumn();
             this.ImageName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ImageTag = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Status = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.buildProjectMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.loadImageMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteImageMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.processToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.startBuildToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.importProjectsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addProjectToConfigurationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openConfigurationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
+            this.saveConfigurationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.removeProjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.clearConfigurationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStrip1
             // 
             this.toolStrip1.AutoSize = false;
             this.toolStrip1.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { this.btClear, this.btImport, this.btAdd, this.btOpen, this.btSave, this.btDelete, this.toolStripSeparator1, this.btBuild });
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btClear,
+            this.btImport,
+            this.btAdd,
+            this.btOpen,
+            this.btSave,
+            this.btDelete,
+            this.toolStripSeparator1,
+            this.btBuild});
             this.toolStrip1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
-            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
+            this.toolStrip1.Location = new System.Drawing.Point(0, 24);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
             this.toolStrip1.Size = new System.Drawing.Size(439, 28);
@@ -83,7 +111,7 @@
             this.btImport.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btImport.Name = "btImport";
             this.btImport.Size = new System.Drawing.Size(23, 25);
-            this.btImport.Text = "Open projects location";
+            this.btImport.Text = "Import projects";
             this.btImport.Click += new System.EventHandler(this.btImport_Click);
             // 
             // btAdd
@@ -93,7 +121,7 @@
             this.btAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btAdd.Name = "btAdd";
             this.btAdd.Size = new System.Drawing.Size(23, 25);
-            this.btAdd.Text = "Add project to the list";
+            this.btAdd.Text = "Add project";
             this.btAdd.Click += new System.EventHandler(this.btAdd_Click);
             // 
             // btOpen
@@ -123,7 +151,7 @@
             this.btDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btDelete.Name = "btDelete";
             this.btDelete.Size = new System.Drawing.Size(23, 25);
-            this.btDelete.Text = "Remove project from the list";
+            this.btDelete.Text = "Remove project";
             // 
             // toolStripSeparator1
             // 
@@ -156,59 +184,58 @@
             this.grid.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.grid.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
             this.grid.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.grid.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle34.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle34.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle34.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle34.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle34.SelectionBackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle34.SelectionForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle34.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.grid.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle34;
             this.grid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.grid.ColumnHeadersVisible = false;
-            this.grid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { this.IsBuild, this.IsDocker, this.Project, this.ImageName, this.ImageTag, this.Status });
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.grid.DefaultCellStyle = dataGridViewCellStyle2;
+            this.grid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Cheched,
+            this.Project,
+            this.Icons,
+            this.ImageName,
+            this.ImageTag,
+            this.Status});
+            dataGridViewCellStyle35.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle35.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle35.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle35.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle35.SelectionBackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle35.SelectionForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle35.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.grid.DefaultCellStyle = dataGridViewCellStyle35;
             this.grid.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.grid.Location = new System.Drawing.Point(0, 28);
+            this.grid.Location = new System.Drawing.Point(0, 52);
             this.grid.MultiSelect = false;
             this.grid.Name = "grid";
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.grid.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle36.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle36.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle36.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle36.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle36.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle36.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle36.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.grid.RowHeadersDefaultCellStyle = dataGridViewCellStyle36;
             this.grid.RowHeadersVisible = false;
             this.grid.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.grid.RowTemplate.Height = 26;
             this.grid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.grid.Size = new System.Drawing.Size(439, 416);
+            this.grid.Size = new System.Drawing.Size(439, 392);
             this.grid.TabIndex = 5;
-            this.grid.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grid_CellClick);
             this.grid.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.grid_CellFormatting);
+            this.grid.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.grid_CellPainting);
             // 
-            // IsBuild
+            // Cheched
             // 
-            this.IsBuild.DataPropertyName = "IsBuild";
-            this.IsBuild.HeaderText = "";
-            this.IsBuild.Name = "IsBuild";
-            this.IsBuild.Width = 24;
-            // 
-            // IsDocker
-            // 
-            this.IsDocker.DataPropertyName = "IsDocker";
-            this.IsDocker.HeaderText = "";
-            this.IsDocker.Name = "IsDocker";
-            this.IsDocker.Width = 24;
+            this.Cheched.DataPropertyName = "Checked";
+            this.Cheched.HeaderText = "";
+            this.Cheched.Name = "Cheched";
+            this.Cheched.Width = 20;
             // 
             // Project
             // 
@@ -220,13 +247,19 @@
             this.Project.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.Project.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
+            // Icons
+            // 
+            this.Icons.HeaderText = "";
+            this.Icons.Name = "Icons";
+            this.Icons.Width = 50;
+            // 
             // ImageName
             // 
             this.ImageName.DataPropertyName = "ImageName";
             this.ImageName.HeaderText = "Image Name";
             this.ImageName.Name = "ImageName";
             this.ImageName.ReadOnly = true;
-            this.ImageName.Width = 150;
+            this.ImageName.Width = 250;
             // 
             // ImageTag
             // 
@@ -245,20 +278,172 @@
             this.Status.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.Status.Width = 80;
             // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fileToolStripMenuItem,
+            this.processToolStripMenuItem,
+            this.optionsToolStripMenuItem,
+            this.helpToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(439, 24);
+            this.menuStrip1.TabIndex = 6;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // fileToolStripMenuItem
+            // 
+            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openConfigurationToolStripMenuItem,
+            this.saveConfigurationToolStripMenuItem,
+            this.clearConfigurationToolStripMenuItem,
+            this.toolStripMenuItem1,
+            this.importProjectsToolStripMenuItem,
+            this.addProjectToConfigurationToolStripMenuItem,
+            this.removeProjectToolStripMenuItem,
+            this.toolStripMenuItem2,
+            this.exitToolStripMenuItem});
+            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+            this.fileToolStripMenuItem.Text = "File";
+            // 
+            // optionsToolStripMenuItem
+            // 
+            this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.buildProjectMenuItem,
+            this.loadImageMenuItem,
+            this.deleteImageMenuItem});
+            this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
+            this.optionsToolStripMenuItem.Text = "Options";
+            // 
+            // helpToolStripMenuItem
+            // 
+            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.aboutToolStripMenuItem});
+            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.helpToolStripMenuItem.Text = "Help";
+            // 
+            // aboutToolStripMenuItem
+            // 
+            this.aboutToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("aboutToolStripMenuItem.Image")));
+            this.aboutToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.aboutToolStripMenuItem.Text = "About";
+            // 
+            // buildProjectMenuItem
+            // 
+            this.buildProjectMenuItem.CheckOnClick = true;
+            this.buildProjectMenuItem.Name = "buildProjectMenuItem";
+            this.buildProjectMenuItem.Size = new System.Drawing.Size(203, 22);
+            this.buildProjectMenuItem.Text = "Build project";
+            // 
+            // loadImageMenuItem
+            // 
+            this.loadImageMenuItem.CheckOnClick = true;
+            this.loadImageMenuItem.Name = "loadImageMenuItem";
+            this.loadImageMenuItem.Size = new System.Drawing.Size(203, 22);
+            this.loadImageMenuItem.Text = "Load image to minikube";
+            // 
+            // deleteImageMenuItem
+            // 
+            this.deleteImageMenuItem.CheckOnClick = true;
+            this.deleteImageMenuItem.Name = "deleteImageMenuItem";
+            this.deleteImageMenuItem.Size = new System.Drawing.Size(203, 22);
+            this.deleteImageMenuItem.Text = "Delete image after load";
+            // 
+            // processToolStripMenuItem
+            // 
+            this.processToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.startBuildToolStripMenuItem});
+            this.processToolStripMenuItem.Name = "processToolStripMenuItem";
+            this.processToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
+            this.processToolStripMenuItem.Text = "Process";
+            // 
+            // startBuildToolStripMenuItem
+            // 
+            this.startBuildToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("startBuildToolStripMenuItem.Image")));
+            this.startBuildToolStripMenuItem.Name = "startBuildToolStripMenuItem";
+            this.startBuildToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.startBuildToolStripMenuItem.Text = "Start build";
+            // 
+            // importProjectsToolStripMenuItem
+            // 
+            this.importProjectsToolStripMenuItem.Name = "importProjectsToolStripMenuItem";
+            this.importProjectsToolStripMenuItem.Size = new System.Drawing.Size(225, 22);
+            this.importProjectsToolStripMenuItem.Text = "Import projects";
+            // 
+            // addProjectToConfigurationToolStripMenuItem
+            // 
+            this.addProjectToConfigurationToolStripMenuItem.Name = "addProjectToConfigurationToolStripMenuItem";
+            this.addProjectToConfigurationToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.addProjectToConfigurationToolStripMenuItem.Text = "Add project";
+            // 
+            // openConfigurationToolStripMenuItem
+            // 
+            this.openConfigurationToolStripMenuItem.Name = "openConfigurationToolStripMenuItem";
+            this.openConfigurationToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.openConfigurationToolStripMenuItem.Text = "Open configuration";
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(177, 6);
+            // 
+            // saveConfigurationToolStripMenuItem
+            // 
+            this.saveConfigurationToolStripMenuItem.Name = "saveConfigurationToolStripMenuItem";
+            this.saveConfigurationToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveConfigurationToolStripMenuItem.Text = "Save Configuration";
+            // 
+            // removeProjectToolStripMenuItem
+            // 
+            this.removeProjectToolStripMenuItem.Name = "removeProjectToolStripMenuItem";
+            this.removeProjectToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.removeProjectToolStripMenuItem.Text = "Remove project";
+            // 
+            // clearConfigurationToolStripMenuItem
+            // 
+            this.clearConfigurationToolStripMenuItem.Name = "clearConfigurationToolStripMenuItem";
+            this.clearConfigurationToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.clearConfigurationToolStripMenuItem.Text = "Clear configuration";
+            // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(177, 6);
+            // 
+            // exitToolStripMenuItem
+            // 
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exitToolStripMenuItem.Text = "Exit";
+            // 
             // ProjectsListPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.grid);
             this.Controls.Add(this.toolStrip1);
+            this.Controls.Add(this.menuStrip1);
             this.Name = "ProjectsListPanel";
             this.Size = new System.Drawing.Size(439, 444);
             this.Load += new System.EventHandler(this.ProjectsListPanel_Load);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grid)).EndInit();
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
+
         }
+
+        private System.Windows.Forms.DataGridViewImageColumn Icons;
+
+        private System.Windows.Forms.DataGridViewCheckBoxColumn Cheched;
 
         private System.Windows.Forms.ToolStripButton btClear;
 
@@ -273,11 +458,28 @@
         private System.Windows.Forms.ToolStripButton btOpen;
         private System.Windows.Forms.ToolStripButton btAdd;
         private System.Windows.Forms.ToolStripButton btDelete;
-        private System.Windows.Forms.DataGridViewImageColumn IsBuild;
-        private System.Windows.Forms.DataGridViewImageColumn IsDocker;
         private System.Windows.Forms.DataGridViewTextBoxColumn Project;
         private System.Windows.Forms.DataGridViewTextBoxColumn ImageName;
         private System.Windows.Forms.DataGridViewTextBoxColumn ImageTag;
         private System.Windows.Forms.DataGridViewTextBoxColumn Status;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem buildProjectMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem loadImageMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem deleteImageMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem processToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem startBuildToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem importProjectsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem addProjectToConfigurationToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openConfigurationToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem saveConfigurationToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem clearConfigurationToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem removeProjectToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
+        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
     }
 }

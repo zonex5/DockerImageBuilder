@@ -26,10 +26,11 @@ namespace DockerImageBuilder
                 lbPath.Text = path;
             };
             ProjectsPanel.OnLogRequest += (msg, color) => AppendTextToLogger(logger, msg, color);
+            ProjectsPanel.OnLogNewLineRequest += () => AppendTextToLogger(logger, "\n", Color.Transparent);
             Service.OnLogRequest += (msg, color) => AppendTextToLogger(logger, msg, color);
             AddProjectsListPanel();
             AddLogsPanel();
-            AddDockerPanel();
+            //AddDockerPanel();
 
             lbPath.Text = path;
         }
