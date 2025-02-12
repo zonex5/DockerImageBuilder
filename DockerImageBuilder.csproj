@@ -91,6 +91,7 @@
     <Compile Include="ProjectDirectoryInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service.cs" />
+    <Compile Include="Services\Registry.cs" />
     <Compile Include="Statuses.cs" />
     <Compile Include="VcType.cs" />
     <EmbeddedResource Include="Forms\ProcessForm.resx">

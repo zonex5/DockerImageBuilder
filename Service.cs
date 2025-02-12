@@ -96,16 +96,15 @@ namespace DockerImageBuilder
             return RunProcessForResult("kubectl", $"config use-context {context}");
         }
 
-        public static List<string> GetAllContexts()
+        public static string[] GetAllContexts()
         {
-            var output = RunProcessForResult("kubectl", "config get-contexts -o name");
-            var contexts = new List<string>();
-            foreach (var line in output.Split(new[] { Environment.NewLine, "\n" }, StringSplitOptions.RemoveEmptyEntries))
-            {
-                contexts.Add(line.Trim());
-            }
-
-            return contexts;
+            return RunProcessForResult("kubectl", "config get-contexts -o name")
+                .Split(
+                    new[] { Environment.NewLine, "\n" },
+                    StringSplitOptions.RemoveEmptyEntries
+                )
+                .Select(line => line.Trim())
+                .ToArray();
         }
 
         public static string FormatDockerImageName(string name)
@@ -146,24 +145,6 @@ namespace DockerImageBuilder
             string output = process.StandardOutput.ReadToEnd();
             process.WaitForExit();
             return output;
-        }
-
-        public static void PutValueToRegistry(string key, string value)
-        {
-            const string keyName = @"SOFTWARE\DockerImageBuilder";
-            using (var subKey = Microsoft.Win32.Registry.CurrentUser.CreateSubKey(keyName))
-            {
-                subKey?.SetValue(key, value);
-            }
-        }
-
-        public static string GetValueFromRegistry(string key)
-        {
-            const string keyName = @"SOFTWARE\DockerImageBuilder";
-            using (var subKey = Microsoft.Win32.Registry.CurrentUser.OpenSubKey(keyName))
-            {
-                return subKey?.GetValue(key)?.ToString();
-            }
         }
     }
 }

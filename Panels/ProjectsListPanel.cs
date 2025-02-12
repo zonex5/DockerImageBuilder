@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using DockerImageBuilder.Forms;
 using DockerImageBuilder.Properties;
+using DockerImageBuilder.Services;
 using Newtonsoft.Json;
 
 namespace DockerImageBuilder.Panels
@@ -21,6 +22,7 @@ namespace DockerImageBuilder.Panels
         public ProjectsListPanel()
         {
             InitializeComponent();
+            Disposed += (sender, e) => SaveSettings();
 
             /*grid.DataBindingComplete += (s, e) =>
             {
@@ -41,6 +43,7 @@ namespace DockerImageBuilder.Panels
         {
             // propagate log events
             BuildService.OnLogRequest += (msg, color) => OnLogRequest(msg, color);
+            LoadSettings();
         }
 
         public void LoadData(string path)
@@ -106,6 +109,22 @@ namespace DockerImageBuilder.Panels
             }
 
             OnLogRequest("Done!", Color.RoyalBlue);
+        }
+
+        private void LoadSettings()
+        {
+            // set checkbox values from registry
+            buildProjectMenuItem.Checked = Registry.GetValueFromRegistry("BuildProject") == "True";
+            loadImageMenuItem.Checked = Registry.GetValueFromRegistry("LoadImage") == "True";
+            deleteImageMenuItem.Checked = Registry.GetValueFromRegistry("DeleteImage") == "True";
+        }
+
+        private void SaveSettings()
+        {
+            // save checkbox values to registry
+            Registry.PutValueToRegistry("BuildProject", buildProjectMenuItem.Checked.ToString());
+            Registry.PutValueToRegistry("LoadImage", loadImageMenuItem.Checked.ToString());
+            Registry.PutValueToRegistry("DeleteImage", deleteImageMenuItem.Checked.ToString());
         }
 
         private void grid_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)

@@ -45,6 +45,7 @@
             this.dockPanel.Location = new System.Drawing.Point(0, 0);
             this.dockPanel.Name = "dockPanel";
             this.dockPanel.Padding = new System.Windows.Forms.Padding(6);
+            this.dockPanel.ShowAutoHideContentOnHover = false;
             this.dockPanel.Size = new System.Drawing.Size(1051, 574);
             this.dockPanel.TabIndex = 10;
             this.dockPanel.Theme = this.vS2015LightTheme1;
@@ -52,8 +53,7 @@
             // statusStrip1
             // 
             this.statusStrip1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.lbPath});
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { this.lbPath });
             this.statusStrip1.Location = new System.Drawing.Point(0, 574);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(1051, 22);
@@ -77,11 +77,11 @@
             this.Name = "MainForm2";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Projects Builder";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm2_FormClosed);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
-
         }
 
         #endregion

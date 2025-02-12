@@ -104,5 +104,10 @@ namespace DockerImageBuilder
                 logs.SelectionColor = logs.ForeColor;
             }
         }
+
+        private void MainForm2_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            
+        }
     }
 }

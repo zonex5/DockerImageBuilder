@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using DockerImageBuilder.Services;
 
 namespace DockerImageBuilder.Panels
 {
@@ -36,9 +37,9 @@ namespace DockerImageBuilder.Panels
             }
 
             // set checkbox values from registry
-            chLoad.Checked = Service.GetValueFromRegistry("LoadImage") == "True";
-            chDelete.Checked = Service.GetValueFromRegistry("DeleteImage") == "True";
-            tbHub.Text = Service.GetValueFromRegistry("Repository");
+            chLoad.Checked = Registry.GetValueFromRegistry("LoadImage") == "True";
+            chDelete.Checked = Registry.GetValueFromRegistry("DeleteImage") == "True";
+            tbHub.Text = Registry.GetValueFromRegistry("Repository");
 
             formIsLoading = false;
         }
@@ -76,7 +77,7 @@ namespace DockerImageBuilder.Panels
                     null;
                 if (key != null)
                 {
-                    Service.PutValueToRegistry(key, checkBox.Checked.ToString());
+                    Registry.PutValueToRegistry(key, checkBox.Checked.ToString());
                 }
             }
         }
@@ -98,14 +99,14 @@ namespace DockerImageBuilder.Panels
 
         private void tbHub_Leave(object sender, EventArgs e)
         {
-            Service.PutValueToRegistry("Repository", tbHub.Text);
+            Registry.PutValueToRegistry("Repository", tbHub.Text);
         }
 
         private void tbHub_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == (char)Keys.Enter)
             {
-                Service.PutValueToRegistry("Repository", tbHub.Text);
+                Registry.PutValueToRegistry("Repository", tbHub.Text);
                 e.Handled = true;
             }
         }
