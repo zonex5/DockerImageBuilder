@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 using DockerImageBuilder.Panels;
+using DockerImageBuilder.Services;
 using WeifenLuo.WinFormsUI.Docking;
 
 namespace DockerImageBuilder

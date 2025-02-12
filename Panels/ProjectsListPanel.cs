@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using DockerImageBuilder.Forms;
+using DockerImageBuilder.Models;
 using DockerImageBuilder.Properties;
 using DockerImageBuilder.Services;
 using Newtonsoft.Json;
@@ -17,7 +19,7 @@ namespace DockerImageBuilder.Panels
         public event Action<string, Color> OnLogRequest = delegate { };
         public event Action OnLogNewLineRequest = delegate { };
 
-        private bool loadImageToMinikube = true;
+        private SettingsModel Settings;
 
         public ProjectsListPanel()
         {
@@ -69,8 +71,9 @@ namespace DockerImageBuilder.Panels
 
         private async void btBuild_Click(object sender, EventArgs e)
         {
-            ProcessForm form = new ProcessForm();
-            if (form.ShowDialog(this) != DialogResult.OK) return;
+            if (MessageBox.Show(@"Are you sure you want to process selected projects?", @"Process projects",
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+                return;
 
             var selectedRows = GetCheckedRows(grid);
             if (selectedRows.Count == 0)
@@ -79,12 +82,10 @@ namespace DockerImageBuilder.Panels
                 return;
             }
 
-            foreach (DataGridViewRow row in selectedRows)
+            foreach (var project in selectedRows.Select(row => (ProjectDirectoryInfo)row.DataBoundItem))
             {
-                var project = (ProjectDirectoryInfo)row.DataBoundItem;
-
                 // build project
-                if (project.Vcs != VcType.None)
+                if (Settings.BuildProject && project.Vcs != VcType.None)
                 {
                     OnLogRequest($"Start building project {project.Caption}\n", Color.RoyalBlue);
                     await BuildService.BuildProject(project.Path);
@@ -92,7 +93,7 @@ namespace DockerImageBuilder.Panels
                 }
 
                 // build docker image
-                if (project.IsDocker)
+                if (Settings.BuildImage && project.IsDocker)
                 {
                     OnLogRequest($"Start building docker image {project.ImageName}\n", Color.RoyalBlue);
                     await BuildService.BuildDockerImage(project.Path, project.ImageName, project.ImageTag);
@@ -100,7 +101,7 @@ namespace DockerImageBuilder.Panels
                 }
 
                 // load image to minikube
-                if (loadImageToMinikube)
+                if (Settings.LoadImage && Settings.LoadImage)
                 {
                     OnLogRequest($"Loading image {project.ImageName} to minikube\n", Color.RoyalBlue);
                     await BuildService.LoadImageToMinikube(project.Path, project.ImageName, project.ImageTag);
@@ -114,15 +115,24 @@ namespace DockerImageBuilder.Panels
         private void LoadSettings()
         {
             // set checkbox values from registry
-            buildProjectMenuItem.Checked = Registry.GetValueFromRegistry("BuildProject") == "True";
-            loadImageMenuItem.Checked = Registry.GetValueFromRegistry("LoadImage") == "True";
-            deleteImageMenuItem.Checked = Registry.GetValueFromRegistry("DeleteImage") == "True";
+            Settings = new SettingsModel
+            {
+                BuildProject = Registry.GetValueFromRegistry("BuildProject") == "True",
+                BuildImage = Registry.GetValueFromRegistry("BuildImage") == "True",
+                LoadImage = Registry.GetValueFromRegistry("LoadImage") == "True",
+                DeleteImage = Registry.GetValueFromRegistry("DeleteImage") == "True"
+            };
+            buildProjectMenuItem.Checked = Settings.BuildProject;
+            buildDockerImageMenuItem.Checked = Settings.BuildImage;
+            loadImageMenuItem.Checked = Settings.LoadImage;
+            deleteImageMenuItem.Checked = Settings.DeleteImage;
         }
 
         private void SaveSettings()
         {
             // save checkbox values to registry
             Registry.PutValueToRegistry("BuildProject", buildProjectMenuItem.Checked.ToString());
+            Registry.PutValueToRegistry("BuildImage", buildDockerImageMenuItem.Checked.ToString());
             Registry.PutValueToRegistry("LoadImage", loadImageMenuItem.Checked.ToString());
             Registry.PutValueToRegistry("DeleteImage", deleteImageMenuItem.Checked.ToString());
         }

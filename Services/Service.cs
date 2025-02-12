@@ -7,9 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
-namespace DockerImageBuilder
+namespace DockerImageBuilder.Services
 {
     public abstract class Service
     {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Threading.Tasks;
+using DockerImageBuilder.Services;
 
 namespace DockerImageBuilder
 {

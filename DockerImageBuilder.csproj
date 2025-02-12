@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BuildService.cs" />
+    <Compile Include="Models\SettingsModel.cs" />
     <Compile Include="Forms\ProcessForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -90,8 +91,8 @@
     <Compile Include="Program.cs" />
     <Compile Include="ProjectDirectoryInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Service.cs" />
     <Compile Include="Services\Registry.cs" />
+    <Compile Include="Services\Service.cs" />
     <Compile Include="Statuses.cs" />
     <Compile Include="VcType.cs" />
     <EmbeddedResource Include="Forms\ProcessForm.resx">
