@@ -37,7 +37,7 @@ namespace DockerImageBuilder
             LoadData(@"C:\Users\zonex\Desktop\gke-tracing");
         }
 
-        private async void btBuild_Click(object sender, EventArgs e)
+        private void btBuild_Click(object sender, EventArgs e)
         {
             var selectedRows = GetCheckedRows(grid);
             if (selectedRows.Count == 0)

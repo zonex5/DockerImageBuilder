@@ -6,5 +6,6 @@
         public bool BuildImage { get; set; }
         public bool LoadImage { get; set; }
         public bool DeleteImage { get; set; }
+        public bool PushImage { get; set; }
     }
 }

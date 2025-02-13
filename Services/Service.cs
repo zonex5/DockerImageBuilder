@@ -28,7 +28,7 @@ namespace DockerImageBuilder.Services
             return File.Exists(Path.Combine(path, "Dockerfile"));
         }
 
-        public static Task RunProcessAsync(string command, string path)
+        public static Task RunProcessAsync(string command, string path = "")
         {
             return Task.Run(() =>
             {

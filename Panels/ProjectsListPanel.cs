@@ -100,6 +100,14 @@ namespace DockerImageBuilder.Panels
                     OnLogNewLineRequest();
                 }
 
+                // push image to registry
+                if (Settings.PushImage)
+                {
+                    OnLogRequest($"Loading image {project.ImageName} to minikube\n", Color.RoyalBlue);
+                    await BuildService.PushDockerImage(project.ImageName, project.ImageTag);
+                    OnLogNewLineRequest();
+                }
+
                 // load image to minikube
                 if (Settings.LoadImage && Settings.LoadImage)
                 {
@@ -107,9 +115,17 @@ namespace DockerImageBuilder.Panels
                     await BuildService.LoadImageToMinikube(project.Path, project.ImageName, project.ImageTag);
                     OnLogNewLineRequest();
                 }
-            }
 
-            OnLogRequest("Done!", Color.RoyalBlue);
+                // delete image
+                if (Settings.DeleteImage && project.IsDocker)
+                {
+                    OnLogRequest($"Deleting image {project.ImageName}\n", Color.RoyalBlue);
+                    await BuildService.DeleteDockerImage(project.ImageName, project.ImageTag);
+                    OnLogNewLineRequest();
+                }
+
+                OnLogRequest("Done!", Color.RoyalBlue);
+            }
         }
 
         private void LoadSettings()
@@ -120,12 +136,14 @@ namespace DockerImageBuilder.Panels
                 BuildProject = Registry.GetValueFromRegistry("BuildProject") == "True",
                 BuildImage = Registry.GetValueFromRegistry("BuildImage") == "True",
                 LoadImage = Registry.GetValueFromRegistry("LoadImage") == "True",
-                DeleteImage = Registry.GetValueFromRegistry("DeleteImage") == "True"
+                DeleteImage = Registry.GetValueFromRegistry("DeleteImage") == "True",
+                PushImage = Registry.GetValueFromRegistry("PushImage") == "True"
             };
             buildProjectMenuItem.Checked = Settings.BuildProject;
             buildDockerImageMenuItem.Checked = Settings.BuildImage;
             loadImageMenuItem.Checked = Settings.LoadImage;
             deleteImageMenuItem.Checked = Settings.DeleteImage;
+            pushImageMenuItem.Checked = Settings.PushImage;
         }
 
         private void SaveSettings()
@@ -135,6 +153,31 @@ namespace DockerImageBuilder.Panels
             Registry.PutValueToRegistry("BuildImage", buildDockerImageMenuItem.Checked.ToString());
             Registry.PutValueToRegistry("LoadImage", loadImageMenuItem.Checked.ToString());
             Registry.PutValueToRegistry("DeleteImage", deleteImageMenuItem.Checked.ToString());
+            Registry.PutValueToRegistry("PushImage", pushImageMenuItem.Checked.ToString());
+        }
+
+        private void settingsItem_Click(object sender, EventArgs e)
+        {
+            if (sender == buildProjectMenuItem)
+            {
+                Settings.BuildProject = buildProjectMenuItem.Checked;
+            }
+            else if (sender == buildDockerImageMenuItem)
+            {
+                Settings.BuildImage = buildDockerImageMenuItem.Checked;
+            }
+            else if (sender == loadImageMenuItem)
+            {
+                Settings.LoadImage = loadImageMenuItem.Checked;
+            }
+            else if (sender == deleteImageMenuItem)
+            {
+                Settings.DeleteImage = deleteImageMenuItem.Checked;
+            }
+            else if (sender == pushImageMenuItem)
+            {
+                Settings.PushImage = pushImageMenuItem.Checked;
+            }
         }
 
         private void grid_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)

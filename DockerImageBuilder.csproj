@@ -89,7 +89,7 @@
       <DependentUpon>ProjectsListPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
-    <Compile Include="ProjectDirectoryInfo.cs" />
+    <Compile Include="Models\ProjectDirectoryInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Registry.cs" />
     <Compile Include="Services\Service.cs" />
